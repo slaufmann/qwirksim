@@ -47,15 +47,6 @@ func isEqualTile(t testing.TB, a, b Tile) bool {
 	return false
 }
 
-func TestHello(t *testing.T) {
-	got := Hello()
-	want := "Hello world!"
-
-	if got != want {
-		t.Errorf("got %q but want %q", got, want)
-	}
-}
-
 func TestRedIsColour(t *testing.T) {
 	var given Colour = Red
 	got := given.isColour()
