@@ -9,8 +9,7 @@ type Colour int
 
 // Values that are supported for [Colour].
 const (
-	UnknownColour Colour = iota
-	Red
+	Red Colour = iota
 	Orange
 	Yellow
 	Green
@@ -23,8 +22,7 @@ type Shape int
 
 // Values that are supported for [Shape].
 const (
-	UnknownShape Shape = iota
-	Circle
+	Circle Shape = iota
 	Fourptstar
 	Diamond
 	Square
