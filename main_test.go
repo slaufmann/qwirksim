@@ -1,9 +1,9 @@
-﻿package main
+package main
 
 import "testing"
 
 const (
-	TestTileCount = int(30)
+	TestTileCount    = int(30)
 	TestTileQuantity = int(1)
 )
 
@@ -28,7 +28,7 @@ func findTileInQueue(tb testing.TB, t Tile, q []Tile) []int {
 
 	var indices []int
 
-	for index,tile := range q {
+	for index, tile := range q {
 		if isEqualTile(tb, t, tile) {
 			indices = append(indices, index)
 		}
@@ -48,7 +48,7 @@ func isEqualTile(t testing.TB, a, b Tile) bool {
 }
 
 func TestHello(t *testing.T) {
-    got := Hello()
+	got := Hello()
 	want := "Hello world!"
 
 	if got != want {
@@ -72,7 +72,7 @@ func TestUnknownColour(t *testing.T) {
 	assertEqual(t, got, want)
 }
 
-func TestCircleIsShape(t *testing.T){
+func TestCircleIsShape(t *testing.T) {
 	var given Shape = Circle
 	got := given.isShape()
 	want := true
@@ -94,10 +94,10 @@ func TestCreateTileQueueGivesCorrectLength(t *testing.T) {
 	assertEqualInt(t, len(queue), int(TestTileCount))
 }
 
-func TestCreateTileQueueGivesValidTiles(t *testing.T){
+func TestCreateTileQueueGivesValidTiles(t *testing.T) {
 	queue := createTileQueue(TestTileCount, TestTileQuantity)
 
-	for _,tile := range queue {
+	for _, tile := range queue {
 		got := tile.Colour.isColour() && tile.Shape.isShape()
 		want := true
 
@@ -105,10 +105,10 @@ func TestCreateTileQueueGivesValidTiles(t *testing.T){
 	}
 }
 
-func TestCreateTileQueueGivesCorrectQuantities(t *testing.T){
+func TestCreateTileQueueGivesCorrectQuantities(t *testing.T) {
 	queue := createTileQueue(TestTileCount, TestTileQuantity)
 
-	for _,tile := range queue {
+	for _, tile := range queue {
 		got := len(findTileInQueue(t, tile, queue))
 		want := TestTileQuantity
 

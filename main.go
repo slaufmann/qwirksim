@@ -1,10 +1,11 @@
 package main
 
 import (
-    "fmt"
+	"fmt"
 )
 
 type Colour int
+
 const (
 	UnknownColour Colour = iota
 	Red
@@ -16,30 +17,31 @@ const (
 )
 
 type Shape int
+
 const (
-    UnknownShape Shape = iota
-    Circle
-    Fourptstar
+	UnknownShape Shape = iota
+	Circle
+	Fourptstar
 	Diamond
 	Square
-    Eightptstar
+	Eightptstar
 	Clover
 )
 
 const (
-    TileQuantity = 3
-	TileCount = 108
+	TileQuantity = 3
+	TileCount    = 108
 )
 
 type Tile struct {
-    Colour Colour
-	Shape Shape
+	Colour Colour
+	Shape  Shape
 }
 
 func (c Colour) isColour() bool {
-    switch c {
+	switch c {
 	case Red:
-	    fallthrough
+		fallthrough
 	case Orange:
 		fallthrough
 	case Yellow:
@@ -48,8 +50,8 @@ func (c Colour) isColour() bool {
 		fallthrough
 	case Blue:
 		fallthrough
-    case Purple:
-	    return true
+	case Purple:
+		return true
 	}
 
 	return false
@@ -59,13 +61,13 @@ func (s Shape) isShape() bool {
 	switch s {
 	case Circle:
 		fallthrough
-    case Fourptstar:
+	case Fourptstar:
 		fallthrough
 	case Diamond:
 		fallthrough
 	case Square:
 		fallthrough
-    case Eightptstar:
+	case Eightptstar:
 		fallthrough
 	case Clover:
 		return true
@@ -74,14 +76,14 @@ func (s Shape) isShape() bool {
 	return false
 }
 
-func createTileQueue(count , quantity int) []Tile {
+func createTileQueue(count, quantity int) []Tile {
 	var queue []Tile
 
 	num := 0
-	for c:=Red; c<=Purple; c++ {
-		for s:=Circle; s<=Clover; s++ {
-			tile := Tile{c,s}
-			for i:=0; i<quantity; i++{
+	for c := Red; c <= Purple; c++ {
+		for s := Circle; s <= Clover; s++ {
+			tile := Tile{c, s}
+			for i := 0; i < quantity; i++ {
 				queue = append(queue, tile)
 				num++
 				if num >= count {
@@ -95,9 +97,9 @@ func createTileQueue(count , quantity int) []Tile {
 }
 
 func Hello() string {
-    return "Hello world!"
+	return "Hello world!"
 }
 
 func main() {
-    fmt.Println(Hello())
+	fmt.Println(Hello())
 }
