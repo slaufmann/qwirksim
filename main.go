@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 )
 
 // Colour represents the colour of a [Tile].
@@ -84,6 +85,17 @@ func (s Shape) isShape() bool {
 	return false
 }
 
+// swapTileInQueue swaps two tiles in the given queue by using the given indices. The altered
+// queue is returned.
+func swapTileInQueue(queue []Tile, a, b int) []Tile {
+	temp := queue[b]
+
+	queue[b] = queue[a]
+	queue[a] = temp
+
+	return queue
+}
+
 // createTileQueue returns a slice of [Tile] elements with a maximum size as given by the count
 // argument. Each tile can be contained multiple times but not more than the quantity argument.
 func createTileQueue(count, quantity int) []Tile {
@@ -101,6 +113,19 @@ func createTileQueue(count, quantity int) []Tile {
 				}
 			}
 		}
+	}
+
+	return queue
+}
+
+// shuffleTileQueue shuffles a given [Tile] queue by swapping tiles in the queue randomly. The
+// queue is shuffled in place therefore altered during the function execution.
+func shuffleTileQueue(queue []Tile) []Tile {
+	rand.Seed(1337)
+
+	for index, _ := range queue {
+		swapIndex := rand.Intn(len(queue))
+		swapTileInQueue(queue, index, swapIndex)
 	}
 
 	return queue

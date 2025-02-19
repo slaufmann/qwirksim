@@ -23,6 +23,14 @@ func assertEqualInt(t testing.TB, got, want int) {
 	}
 }
 
+func assertLessFloat32(t testing.TB, got, want float32) {
+	t.Helper()
+
+	if got > want {
+		t.Errorf("got %v bigger than want %v", got, want)
+	}
+}
+
 func findTileInQueue(tb testing.TB, t Tile, q []Tile) []int {
 	tb.Helper()
 
@@ -105,4 +113,46 @@ func TestCreateTileQueueGivesCorrectQuantities(t *testing.T) {
 
 		assertEqualInt(t, int(got), int(want))
 	}
+}
+
+func TestSwapTileInQueueSwapsTiles(t *testing.T) {
+	queue := [2]Tile{{Red, Circle}, {Purple, Clover}}
+
+	swappedQueue := swapTileInQueue(queue[:], 0, 1)
+	swappedCorrect := [2]Tile{{Purple, Clover}, {Red, Circle}}
+
+	equalCount := 0
+	for index, tile := range swappedCorrect {
+		if isEqualTile(t, tile, swappedQueue[index]) {
+			equalCount++
+		}
+	}
+
+	assertEqualInt(t, equalCount, len(queue))
+}
+
+func TestShuffleTileQueueReturnsUnorderedSlice(t *testing.T) {
+	orderedQueue := createTileQueue(TestTileCount, TestTileQuantity)
+	shuffledQueue := make([]Tile, len(orderedQueue))
+	copy(shuffledQueue, orderedQueue)
+
+	shuffledQueue = shuffleTileQueue(shuffledQueue)
+
+	equalCount := 0
+	for index, tile := range shuffledQueue {
+		if isEqualTile(t, tile, orderedQueue[index]) {
+			equalCount++
+		}
+	}
+
+	var got float32
+	// manually catch the case of zero overlap
+	if equalCount == 0 {
+		got = float32(0.0)
+	} else {
+		got = float32(TestTileCount) / float32(equalCount)
+	}
+	want := float32(0.1) // a shuffled queue is allowed to have 10% overlap with an ordered queue
+
+	assertLessFloat32(t, got, want)
 }
