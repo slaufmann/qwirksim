@@ -85,6 +85,63 @@ func (s Shape) isShape() bool {
 	return false
 }
 
+// Tile.GoString implements the GoStringer interface for the [Tile] type. It simply returns
+// the string representation of the Colour and the Shape field like "(Colour Shape)".
+func (t Tile) GoString() string {
+	return fmt.Sprintf("(%#v %#v)", t.Colour, t.Shape)
+}
+
+// Colour.GoString implements the GoStringer interface for the [Colour] type. It simply returns
+// the name of the colour. If the given colour is none of the defined ones, "Unknown Colour" is
+// returned.
+func (c Colour) GoString() string {
+	str := ""
+
+	switch c {
+	case Red:
+		str = "Red"
+	case Orange:
+		str = "Orange"
+	case Yellow:
+		str = "Yellow"
+	case Green:
+		str = "Green"
+	case Blue:
+		str = "Blue"
+	case Purple:
+		str = "Purple"
+	default:
+		str = "Unknown Colour"
+	}
+
+	return str
+}
+
+// Shape.GoString implements the GoStringer interface for the [Shape] type. It returns the name
+// of the shape. If the given shape is none of the defined ones, "Unknown Shape" is returned.
+func (s Shape) GoString() string {
+	str := ""
+
+	switch s {
+	case Circle:
+		str = "Circle"
+	case Fourptstar:
+		str = "4ptStar"
+	case Diamond:
+		str = "Diamond"
+	case Square:
+		str = "Square"
+	case Eightptstar:
+		str = "8ptStar"
+	case Clover:
+		str = "Clover"
+	default:
+		str = "Unknown Shape"
+	}
+
+	return str
+}
+
 // swapTileInQueue swaps two tiles in the given queue by using the given indices. The altered
 // queue is returned.
 func swapTileInQueue(queue []Tile, a, b int) []Tile {
@@ -131,10 +188,9 @@ func shuffleTileQueue(queue []Tile) []Tile {
 	return queue
 }
 
-func Hello() string {
-	return "Hello world!"
-}
-
 func main() {
-	fmt.Println(Hello())
+	queue := createTileQueue(TileCount, TileQuantity)
+	queue = shuffleTileQueue(queue)
+
+	fmt.Printf("This is the queue:\n%#v\n", queue)
 }

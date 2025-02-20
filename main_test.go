@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 const (
 	TestTileCount    = int(30)
@@ -16,6 +19,14 @@ func assertEqual(t testing.TB, got, want bool) {
 }
 
 func assertEqualInt(t testing.TB, got, want int) {
+	t.Helper()
+
+	if got != want {
+		t.Errorf("got %v but want %v", got, want)
+	}
+}
+
+func assertEqualString(t testing.TB, got, want string) {
 	t.Helper()
 
 	if got != want {
@@ -71,6 +82,22 @@ func TestUnknownColour(t *testing.T) {
 	assertEqual(t, got, want)
 }
 
+func TestColourGoStringForValidColour(t *testing.T) {
+	var given Colour = Red
+	got := fmt.Sprintf("%#v", given)
+	want := "Red"
+
+	assertEqualString(t, got, want)
+}
+
+func TestColourGoStringForUnknownColour(t *testing.T) {
+	var given Colour = 10
+	got := fmt.Sprintf("%#v", given)
+	want := "Unknown Colour"
+
+	assertEqualString(t, got, want)
+}
+
 func TestCircleIsShape(t *testing.T) {
 	var given Shape = Circle
 	got := given.isShape()
@@ -85,6 +112,30 @@ func TestUnknownShape(t *testing.T) {
 	want := false
 
 	assertEqual(t, got, want)
+}
+
+func TestShapeGoStringForValidShape(t *testing.T) {
+	var given Shape = Circle
+	got := fmt.Sprintf("%#v", given)
+	want := "Circle"
+
+	assertEqualString(t, got, want)
+}
+
+func TestShapeGoStringForUnknownShape(t *testing.T) {
+	var given Shape = 10
+	got := fmt.Sprintf("%#v", given)
+	want := "Unknown Shape"
+
+	assertEqualString(t, got, want)
+}
+
+func TestTileGoStringForValidTile(t *testing.T) {
+	given := Tile{Colour: Red, Shape: Circle}
+	got := fmt.Sprintf("%#v", given)
+	want := "(Red Circle)"
+
+	assertEqualString(t, got, want)
 }
 
 func TestCreateTileQueueGivesCorrectLength(t *testing.T) {
